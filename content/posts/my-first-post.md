@@ -3,7 +3,8 @@ title = "Notes on classical ML math"
 description = "How to render katex"
 date = 2023-04-02T22:00:05+08:00
 slug = "classical-ml-math-notes"
-categories = ["machine learning", "math"]
+tags = ["machine learning", "math"]
+menu = "main"
 +++
 
 # Introduction
