@@ -11,7 +11,7 @@ menu:
 
 I’m an independent machine learning researcher. I blog about ML/AI, math and physics.
 
-__Research interests__: AI, Emergence, Quantum Computing, PDE, Category Theory.
+__Research interests__: AI, Emergence, Quantum Computing
 
 ## Recent posts
 
