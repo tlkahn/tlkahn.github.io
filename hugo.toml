@@ -10,6 +10,10 @@ enableRobotsTXT = true
 [menu]
 # [[menu.before]]
 [[menu.after]]
+  name = "Email"
+  url = "guoyong206@gmail.com"
+  weight = 20
+[[menu.after]]
   name = "Github"
   url = "https://github.com/tlkahn"
   weight = 10
