@@ -1,5 +1,5 @@
 +++
-title = "Memorizing Peter Higgs"
+title = "About Peter Higgs"
 date = 2024-04-10T09:44:21+08:00
 tags = ["physics", "math"]
 menu = "main"
