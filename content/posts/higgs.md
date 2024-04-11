@@ -7,9 +7,7 @@ menu = "main"
 
 Peter Higgs, one of the greatest theorectical physists who passed away earlier this week in Edinburgh.
 
-{{< rawhtml >}}
-<img src="https://pbs.twimg.com/media/GKvg8gWXQAAqR_7?format=jpg&name=large" />
-{{< /rawhtml >}}
+![Peter Higgs](/img/higgs-profile.jpeg)
 
 There is a Native American proverb which goes: _Tell me a fact, and I'll learn. Tell me a truth, and I'll believe. But tell me a story, and it will live in my heart forever._ I guess the best way to memorize someone is to share good stories:
 
@@ -93,6 +91,4 @@ The Higgs boson ({{<katex>}}H{{</katex>}}) is responsible for giving mass to oth
 
 Wikipedia has provided a clean chart of all the above "fundamental" particles:
 
-{{< rawhtml >}}
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Standard_Model_of_Elementary_Particles.svg" />
-{{< /rawhtml >}}
+![Standard Model Of Elementary Particles](/img/standard-model-of-elementary-particles.svg)
