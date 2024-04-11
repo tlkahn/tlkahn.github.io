@@ -9,7 +9,7 @@ menu:
 
 # About me
 
-I’m an independent machine learning researcher. I blog about ML/AI, math and physics.
+I’m a machine learning researcher. I blog about ML/AI, math and physics.
 
 __Research interests__: AI, Emergence, Quantum Computing
 
