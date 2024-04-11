@@ -20,3 +20,5 @@ The piece of text is actually talking about self-preservation (not only for life
 Interestingly, the paragraph appears right before the paragraph is the well-known butterfly metaphor:
 
 > Once, Chuang-tzu dreamed he was a butterfly. Vividly a butterfly. He fluttered around, happy with himself. He didn’t know there was a Chuang-Chou. Shortly he woke up. There he was, vividly Chuang-Chou. Is it Chuang-Chou dreamed he was the butterfly, or a butterfly dreamed he was Chuang-Chou. There must be something that separates Chuang-Chou and butterfly. Realizing the illusory nature of identity is called moksha or awakening.
+
+![Butterfly](/img/butterfly.png)
