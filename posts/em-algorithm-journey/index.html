@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="An iterative exploration on EM algorithm # As a continuation of my notes on classicial machine learning, this is an exclusive study on EM agorithm to deepen my understanding from a wider variety of perspectives.
+EM as Expection &#43; Maximization # The understanding of latent variable is the first `get` in EM algorithms.
+Through latent variable, we have witnessed the greatness of EM algorithm which breaks through the limit of MLE.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="An iterative exploration on EM algorithm" />
+<meta property="og:description" content="An iterative exploration on EM algorithm # As a continuation of my notes on classicial machine learning, this is an exclusive study on EM agorithm to deepen my understanding from a wider variety of perspectives.
+EM as Expection &#43; Maximization # The understanding of latent variable is the first `get` in EM algorithms.
+Through latent variable, we have witnessed the greatness of EM algorithm which breaks through the limit of MLE." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tlkahn.github.io/posts/em-algorithm-journey/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-02T23:00:05+08:00" />
+<meta property="article:modified_time" content="2024-01-02T23:00:05+08:00" />
+<title>An iterative exploration on EM algorithm | Yong Guo</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" >
+<link rel="canonical" href="https://tlkahn.github.io/posts/em-algorithm-journey/">
+<link rel="stylesheet" href="/book.min.33a48f5432973b8ff9a82679d9e45d67f2c15d4399bd2829269455cfe390b5e8.css" integrity="sha256-M6SPVDKXO4/5qCZ52eRdZ/LBXUOZvSgpJpRVz&#43;OQteg=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/en.search.min.d1bdff2fe1d8cb285e119eb29ba66f93656482d9c40d4e016913bdd77281f297.js" integrity="sha256-0b3/L&#43;HYyyheEZ6ym6Zvk2VkgtnEDU4BaRO913KB8pc=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Yong Guo</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/"  >
+        Introduction
+      </a>
+  </li>
+  
+  <li>
+    <a href="/posts/"  >
+        Blog
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://linktr.ee/yongg"  target="_blank" rel="noopener">
+        Linktree
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://twitter.com/toeinriver"  target="_blank" rel="noopener">
+        Twitter
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>An iterative exploration on EM algorithm</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#em-as-expection--maximization">EM as Expection + Maximization</a></li>
+    <li><a href="#em-as-a-local-lower-bound-construction">EM as a local lower bound construction</a></li>
+    <li><a href="#k-means-as-a-hard-em">K-means as a hard EM</a></li>
+    <li><a href="#em-as-a-special-case-of-generalized-em">EM as a special case of generalized EM</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown book-post">
+  <h1>
+    <a href="/posts/em-algorithm-journey/">An iterative exploration on EM algorithm</a>
+  </h1>
+  
+  <h5>January 2, 2024</h5>
+
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/machine-learning/">Machine Learning</a>, 
+      <a href="/tags/math/">Math</a>
+  </div>
+  
+
+
+
+<h1 id="an-iterative-exploration-on-em-algorithm">
+  An iterative exploration on EM algorithm
+  <a class="anchor" href="#an-iterative-exploration-on-em-algorithm">#</a>
+</h1>
+<p>As a continuation of my notes on classicial machine learning, this is an
+exclusive study on EM agorithm to deepen my understanding from a wider
+variety of perspectives.</p>
+<h2 id="em-as-expection--maximization">
+  EM as Expection + Maximization
+  <a class="anchor" href="#em-as-expection--maximization">#</a>
+</h2>
+<p>The understanding of latent variable is the first `get` in EM
+algorithms.</p>
+<p>Through latent variable, we have witnessed the greatness of EM algorithm
+which breaks through the limit of MLE.</p>
+<p>Likelihood of latent variables:</p>
+
+<link rel="stylesheet" href="/katex/katex.min.css" />
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script><span>
+  \(L(\theta;{\bf X})=p({\bf X} | \theta)=\int p({\bf X},{\bf Z} | \theta)d{\bf Z}\)
+</span>
+
+<p>E-step:</p>
+<span>
+  \(Q(\theta|\theta^{(i)})=\operatorname{E}_{\mathbf{Z},\mathbf{X},\theta^{(i)}}\left[\log L(\theta;\mathbf{X},\mathbf{Z})\right]\)
+</span>
+
+<p>M-step:</p>
+<span>
+  \(\theta^{(t&#43;1)} = \underset{\theta}{\arg\max} \, Q(\theta|\theta^{(t)})\)
+</span>
+
+<p>Here&rsquo;s the same example using a Gaussian Mixture Model (GMM) with two
+components in Python, using NumPy and SciPy:</p>
+<ol>
+<li>Import required libraries and generate data:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> norm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">42</span>)
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate((np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">100</span>), np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">100</span>)))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(len(data))
+</span></span><span style="display:flex;"><span>print(data[:<span style="color:#ae81ff">5</span>])
+</span></span></code></pre></div><ol start="2">
+<li>Define the log-likelihood function for the complete data (X, Z):</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">log_likelihood</span>(data, means, pis, k):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>log(np<span style="color:#f92672">.</span>sum(pis[j] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(data, means[j], <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(k))))
+</span></span></code></pre></div><ol start="3">
+<li>Implement the EM algorithm:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">EM</span>(data, k, max_iterations):
+</span></span><span style="display:flex;"><span>    means <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>uniform(np<span style="color:#f92672">.</span>min(data), np<span style="color:#f92672">.</span>max(data), k)
+</span></span><span style="display:flex;"><span>    pis <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>full(k, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>k)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(max_iterations):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># E-step</span>
+</span></span><span style="display:flex;"><span>        assignments <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[pis[j] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x, means[j], <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(k)] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> data])
+</span></span><span style="display:flex;"><span>        assignments <span style="color:#f92672">=</span> assignments <span style="color:#f92672">/</span> np<span style="color:#f92672">.</span>sum(assignments, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># M-step</span>
+</span></span><span style="display:flex;"><span>        means <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(assignments <span style="color:#f92672">*</span> data<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) <span style="color:#f92672">/</span> np<span style="color:#f92672">.</span>sum(assignments, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        pis <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(assignments, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) <span style="color:#f92672">/</span> len(data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> means, pis
+</span></span></code></pre></div><ol start="4">
+<li>Run the EM algorithm with the generated data, 2 components, and 50
+iterations:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>means, pis <span style="color:#f92672">=</span> EM(data, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">50</span>)
+</span></span></code></pre></div><ol start="5">
+<li>Visualize the result:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>hist(data, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, density<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.6</span>)
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(np<span style="color:#f92672">.</span>min(data), np<span style="color:#f92672">.</span>max(data), <span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>gmm_pdf <span style="color:#f92672">=</span> pis[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x, means[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> pis[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x, means[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x, gmm_pdf, <span style="color:#e6db74">&#39;r-&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;./gmm_pdf.png&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="/img/gmm_pdf.png" alt="" /></p>
+<h2 id="em-as-a-local-lower-bound-construction">
+  EM as a local lower bound construction
+  <a class="anchor" href="#em-as-a-local-lower-bound-construction">#</a>
+</h2>
+<p>If you delve deeper into the convergence proof of the EM algorithm based
+on latent variables, using the <em>Jensen&rsquo;s inequality</em> construction for
+the log(x) function <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, we can easily prove that the EM algorithm
+<strong>repeatedly constructs new lower bounds and then further solves them</strong>.</p>
+<p>Thus the EM process can be seen as: fix the current parameters
+<span>
+  \(\theta_n\)
+</span>
+ first, calculate a lower bound function for the distribution
+of the latent variables, optimize this function to obtain new
+parameters, and then repeat.</p>
+<p>The EM process described here is connected to the <a href="https://en.wikipedia.org/wiki/Variational_Bayesian_methods">Variational
+Bayes</a> (VB)
+method:</p>
+<blockquote>
+<p>Variational Bayes can be seen as an extension of the
+expectation-maximization (EM) algorithm from maximum a posteriori
+estimation (MAP estimation) of the single most probable value of each
+parameter to fully Bayesian estimation which computes (an
+approximation to) the entire posterior distribution of the parameters
+and latent variables. As in EM, it finds a set of optimal parameter
+values, and it has the same alternating structure as does EM, based on
+a set of interlocked (mutually dependent) equations that cannot be
+solved analytically.</p>
+</blockquote>
+<p>Both methods involve finding approximate solutions to intractable
+optimization problems by constructing lower bounds for the objective
+functions. Similarly, in the Variational Bayes method, the goal is to
+approximate the posterior distribution of latent variables by minimizing
+the Kullback-Leibler (KL) divergence between the true posterior
+distribution and the approximate distribution. This is achieved by
+constructing a lower-bound function for the log marginal likelihood,
+called the Evidence Lower Bound (ELBO), and optimizing this lower-bound
+function with respect to the approximate distribution.</p>
+<h2 id="k-means-as-a-hard-em">
+  K-means as a hard EM
+  <a class="anchor" href="#k-means-as-a-hard-em">#</a>
+</h2>
+<p>Based on the understanding of the second level, you can now freely apply
+the EM algorithm to GMM and HMM models. Especially after a deep
+understanding of GMM, for the joint probability with latent variables,
+when using the Gaussian distribution as a substitute:</p>
+<span>
+  \(\begin{aligned} P_{\Theta}\left(x_1, \ldots, x_n, z_1, \ldots z_n\right) &amp; =\prod_{t=1}^N P_{\Theta}\left(z_t\right) P_{\Theta}\left(x_t \mid z_t\right) \\ &amp; =\prod_{t=1}^N \frac{1}{K} \mathcal{N}\left(\mu^{z_t}, I\right)\left(x_t\right)\end{aligned}\)
+</span>
+
+<p>This formula represents the joint probability distribution for a set of
+observed variables <span>
+  \(x_1, \ldots, x_n\)
+</span>
+ and latent variables
+<span>
+  \(z_1, \ldots, z_n\)
+</span>
+ under a Gaussian Mixture Model (GMM) with parameter
+<span>
+  \(\Theta\)
+</span>
+.</p>
+<p>The formula can be broken down as follows:</p>
+<ol>
+<li><span>
+  \(P_{\Theta}\left(x_1, \ldots, x_n, z_1, \ldots z_n\right)\)
+</span>
+: This is
+the joint probability of the observed variables <span>
+  \(x_1, \ldots, x_n\)
+</span>
+
+and the latent variables <span>
+  \(z_1, \ldots, z_n\)
+</span>
+ under parameter
+<span>
+  \(\Theta\)
+</span>
+.</li>
+<li><span>
+  \(\prod_{t=1}^N P_{\Theta}\left(z_t\right) P_{\Theta}\left(x_t \mid z_t\right)\)
+</span>
+:
+This expression is the product of the prior probabilities of the
+latent variables <span>
+  \(z_t\)
+</span>
+ and the conditional probabilities of the
+observed variables <span>
+  \(x_t\)
+</span>
+ given the latent variables <span>
+  \(z_t\)
+</span>
+. The
+product is taken over all <span>
+  \(N\)
+</span>
+ data points.</li>
+<li><span>
+  \(\frac{1}{K}\)
+</span>
+: This term represents the uniform prior distribution
+of the latent variables <span>
+  \(z_t\)
+</span>
+, where <span>
+  \(K\)
+</span>
+ is the number of Gaussian
+components in the GMM.</li>
+<li><span>
+  \(\mathcal{N}\left(\mu^{z_t}, I\right)\left(x_t\right)\)
+</span>
+: This term is
+the conditional probability of the observed variable <span>
+  \(x_t\)
+</span>
+ given the
+latent variable <span>
+  \(z_t\)
+</span>
+. It is modeled as a Gaussian distribution with
+mean <span>
+  \(\mu^{z_t}\)
+</span>
+ and identity covariance matrix <span>
+  \(I\)
+</span>
+.</li>
+</ol>
+<p>Easy to see a connection with MSE:</p>
+<span>
+  \(\left(\mu^1, \ldots, \mu^K\right)^*=\underset{\mu^1, \ldots, \mu^k}{\operatorname{argmin}} \underset{z_1, \ldots, z_n}{\min}\,\sum\limits_{t=1}^N\left\|\mu^{z_t}-x_t\right\|^2\)
+</span>
+
+<p>This formula represents the optimization problem for finding the optimal
+means <span>
+  \(\left(\mu^1, \ldots, \mu^K\right)^*\)
+</span>
+ of a Gaussian Mixture Model
+(GMM) by minimizing the mean squared distance between the data points
+and their corresponding means.</p>
+<p>The formula can be broken down as follows:</p>
+<ol>
+<li><span>
+  \(\left(\mu^1, \ldots, \mu^K\right)^*\)
+</span>
+: This represents the optimal
+means of the Gaussian components in the GMM.</li>
+<li><span>
+  \(\underset{\mu^1, \ldots, \mu^k}{\operatorname{argmin}}\)
+</span>
+: This
+indicates that we are looking for the values of
+<span>
+  \(\mu^1, \ldots, \mu^k\)
+</span>
+ that minimize the expression that follows.</li>
+<li><span>
+  \(\underset{z_1, \ldots, z_n}{\min}\)
+</span>
+: This indicates that we are
+looking for the values of the latent variables <span>
+  \(z_1, \ldots, z_n\)
+</span>
+
+that minimize the expression that follows.</li>
+<li><span>
+  \(\sum\limits_{t=1}^N\left\|\mu^{z_t}-x_t\right\|^2\)
+</span>
+: This is the sum
+of the squared Euclidean distances between each data point <span>
+  \(x_t\)
+</span>
+ and
+its corresponding mean <span>
+  \(\mu^{z_t}\)
+</span>
+. The sum is taken over all <span>
+  \(N\)
+</span>
+
+data points.</li>
+</ol>
+<p>A simpler and more intuitive explanation is that the K-means algorithm
+uses a <a href="https://learn.microsoft.com/en-us/analysis-services/data-mining/microsoft-clustering-algorithm-technical-reference?view=asallproducts-allversions">hard
+clustering</a>
+algorithm, while the EM algorithm we are discussing is a soft clustering
+algorithm. The so-called hard is a binary decision, either it is or it
+isn&rsquo;t (0-1 choice). On the other hand, the soft deals with situations
+like a data point always belongs to multiple clusters, and that a
+probability is calculated for each combination of data point and
+cluster.</p>
+<p>This can be <a href="https://stats.stackexchange.com/a/78278">summarized</a> as:</p>
+<blockquote>
+<p>There is no &ldquo;k-means algorithm&rdquo;. There is MacQueens algorithm for
+k-means, the Lloyd/Forgy algorithm for k-means, the Hartigan-Wong
+method, …</p>
+<p>There also isn&rsquo;t &ldquo;the&rdquo; EM-algorithm. It is a general scheme of
+repeatedly expecting the likelihoods and then maximizing the model.
+The most popular variant of EM is also known as &ldquo;Gaussian Mixture
+Modeling&rdquo; (GMM), where the model are multivariate Gaussian
+distributions.</p>
+<p>One can consider Lloyds algorithm to consist of two steps:</p>
+<ul>
+<li>the E-step, where each object is assigned to the centroid such that
+it is assigned to the most likely cluster.</li>
+<li>the M-step, where the model (centroids) are recomputed (least
+squares optimization).</li>
+</ul>
+<p>… iterating these two steps, as done by Lloyd, makes this effectively
+an instance of the general EM scheme. It differs from GMM that:</p>
+<ul>
+<li>it uses hard partitioning, i.e. each object is assigned to exactly
+one cluster</li>
+<li>the model are centroids only, no covariances or variances are taken
+into account</li>
+</ul>
+</blockquote>
+<h2 id="em-as-a-special-case-of-generalized-em">
+  EM as a special case of generalized EM
+  <a class="anchor" href="#em-as-a-special-case-of-generalized-em">#</a>
+</h2>
+<p>We define the right side of Jensen&rsquo;s inequality as the <a href="https://en.wikipedia.org/wiki/Thermodynamic_free_energy">free
+energy</a>.</p>
+<span>
+  \(\mathcal{F}(q, \theta)=\langle\log P(\mathcal{X}, \mathcal{Y} \mid \theta)\rangle_{q(\mathcal{X})}&#43;\mathbf{H}[q]\)
+</span>
+
+<p>This formula represents the free energy <span>
+  \(\mathcal{F}(q, \theta)\)
+</span>
+, which
+is an important concept in variational inference and is used to
+approximate the log marginal likelihood. The formula consists of two
+parts:</p>
+<ol>
+<li>
+<p><span>
+  \(\langle\log P(\mathcal{X}, \mathcal{Y} \mid \theta)\rangle_{q(\mathcal{X})}\)
+</span>
+:
+This term represents the expected log joint probability of the
+observed data <span>
+  \(\mathcal{Y}\)
+</span>
+ and the latent variables <span>
+  \(\mathcal{X}\)
+</span>
+
+given the model parameters <span>
+  \(\theta\)
+</span>
+. The expectation is taken with
+respect to the approximate posterior distribution <span>
+  \(q(\mathcal{X})\)
+</span>
+.
+This term measures the goodness-of-fit of the model to the data,
+taking into account the uncertainty in the latent variables.</p>
+</li>
+<li>
+<p><span>
+  \(\mathbf{H}[q]\)
+</span>
+: This term represents the entropy of the approximate
+posterior distribution <span>
+  \(q(\mathcal{X})\)
+</span>
+. It measures the uncertainty
+in the latent variables given the observed data. High entropy
+corresponds to a more dispersed distribution, while low entropy
+corresponds to a more concentrated distribution.</p>
+</li>
+</ol>
+<p>The free energy combines these two terms, balancing the goodness-of-fit
+of the model with the uncertainty in the latent variables. In
+variational inference, the goal is to minimize the free energy with
+respect to both the approximate posterior distribution <span>
+  \(q(\mathcal{X})\)
+</span>
+
+and the model parameters <span>
+  \(\theta\)
+</span>
+. This minimization leads to an
+approximation of the true posterior distribution of the latent variables
+and provides a lower bound on the log marginal likelihood.</p>
+<p>Thus, <strong>E-step is to optimize the latent (approximate posterior)
+distribution <span>
+  \(q(\mathcal{X})\)
+</span>
+ with fixed model parameters <span>
+  \(\theta\)
+</span>
+, and
+the M-step is to optimize <span>
+  \(\theta\)
+</span>
+ with a fixed <span>
+  \(q(\mathcal{X})\)
+</span>
+. This
+is the generalized EM algorithm</strong>.</p>
+<p>E-Step :</p>
+<span>
+  \(q^{(k)}(\mathcal{X}) :=\underset{q(\mathcal{X})}{\operatorname{argmax}} \mathcal{F}\left(q(\mathcal{X}), \theta^{(k-1)}\right)\)
+</span>
+
+<p>M-step:</p>
+<span>
+  \(\theta^{(k)} :=\underset{\theta}{\operatorname{argmax}} \mathcal{F}\left(q^{(k)}(\mathcal{X}), \theta\right)\)
+</span>
+
+<p>After understanding the generalized EM algorithm, we delve deeper into
+free energy and discover the relationship between free energy,
+likelihood, and KL divergence. When the model parameters are fixed, the
+only option is to optimize the KL divergence. In this case, the hidden
+distribution can only take the following form:</p>
+<span>
+  \(q^{(k)}(\mathcal{X})=P\left(\mathcal{X} \mid \mathcal{Y}, \theta^{(k-1)}\right)\)
+</span>
+
+<p>In the EM algorithm, <strong>this is directly given</strong>. Therefore, the EM
+algorithm is a naturally optimal hidden distribution case within the
+generalized EM algorithm. <strong>However, in many cases, the hidden
+distribution is not so easy to compute&hellip;</strong></p>
+<p>One example where the hidden distribution is not easy to compute arises
+in the context of topic models, such as Latent Dirichlet Allocation
+(LDA). In LDA, the goal is to learn the hidden topics that generate a
+collection of documents. The observed data are the words in each
+document, and the latent variables are the topic assignments for each
+word. The hidden distribution in this case is the posterior distribution
+of the topic assignments given the observed words and the model
+parameters (topic-word probabilities and document-topic probabilities).</p>
+<p>Computing the exact hidden distribution in LDA is challenging because
+the posterior distribution involves a large number of topic assignments,
+which grow exponentially with the number of words and topics. This makes
+exact inference intractable for all but the smallest datasets and
+simplest models.</p>
+<p>To overcome this difficulty, various approximate inference techniques
+are employed in practice to estimate the hidden distribution in LDA,
+such as:</p>
+<ol>
+<li>Gibbs sampling: A Markov chain Monte Carlo (MCMC) method that
+generates samples from the posterior distribution by iteratively
+sampling topic assignments for each word in the documents.</li>
+<li>Variational inference: A deterministic method that approximates the
+true posterior distribution with a simpler distribution (e.g., a
+factorized distribution) and minimizes the KL divergence between the
+true and approximate distributions.</li>
+<li>Collapsed variational inference or collapsed Gibbs sampling:
+Techniques that integrate out some of the model parameters (e.g.,
+topic-word probabilities) to simplify the inference problem and
+reduce the computational complexity.</li>
+</ol>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>(Jensen&rsquo;s inequality) Let <span>
+  \(f\)
+</span>
+ be a <a href="https://en.wikipedia.org/wiki/Convex_function">convex
+function</a> on interval
+<span>
+  \(I\)
+</span>
+: If <span>
+  \(x_{1}, x_{2}, \ldots, x_{n} \in I\)
+</span>
+ and
+<span>
+  \(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{n} \geq 0\)
+</span>
+ with
+<span>
+  \(\sum_{i=1}^{n} \lambda_{i}=1\)
+</span>
+, we have:</p>
+<span>
+  \(    f\left(\sum_{i=1}^{n} \lambda_{i} x_{i}\right) \leq \sum_{i=1}^{n} \lambda_{i} f\left(x_{i}\right)
+    \)
+</span>
+
+<p>Since <span>
+  \(\ln (x)\)
+</span>
+ is concave (negative convex), we may apply Jensen&rsquo;s
+inequality:</p>
+<span>
+  \(    \ln \sum_{i=1}^{n} \lambda_{i} x_{i} \geq \sum_{i=1}^{n} \lambda_{i} \ln \left(x_{i}\right)
+    \)
+</span>
+
+<p>This result enables us to repeatedly establish a lower bound for the
+logarithm of a sum, which is a key step in deriving the EM
+algorithm.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#em-as-expection--maximization">EM as Expection + Maximization</a></li>
+    <li><a href="#em-as-a-local-lower-bound-construction">EM as a local lower bound construction</a></li>
+    <li><a href="#k-means-as-a-hard-em">K-means as a hard EM</a></li>
+    <li><a href="#em-as-a-special-case-of-generalized-em">EM as a special case of generalized EM</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

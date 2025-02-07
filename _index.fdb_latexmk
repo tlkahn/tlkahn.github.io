@@ -1,0 +1,13 @@
+# Fdb version 4
+["pdflatex"] 1729841958.69461 "/Users/toeinriver/Projects/math-in-ai/content/_index.md" "_index.pdf" "_index" 1729841958.82881 2
+  "/Users/toeinriver/Projects/math-in-ai/content/_index.md" 1729841958.12681 295 0ceb958039298ed26e7608b955888142 ""
+  "/usr/local/texlive/2021/texmf-dist/web2c/texmf.cnf" 1727217670 42021 a58d36c7ede3d2fc9f93da62d691ddff ""
+  "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1728746743 3325974 e17da99b1b0b1ae8d2dd4b2bf9255cc4 ""
+  "/usr/local/texlive/2021/texmf.cnf" 1616695596 577 4c1911a7228e554c6032256d3cf5567d ""
+  "_index.aux" 1729841958.69415 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "_index.md" 1729841958.12681 295 0ceb958039298ed26e7608b955888142 ""
+  (generated)
+  "_index.aux"
+  "_index.log"
+  "_index.pdf"
+  (rewritten before read)

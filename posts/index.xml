@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on Yong Guo</title>
+    <link>https://tlkahn.github.io/posts/</link>
+    <description>Recent content in Blog on Yong Guo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Nov 2024 15:40:59 +0800</lastBuildDate>
+    <atom:link href="https://tlkahn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Notes on GKR Protocol</title>
+      <link>https://tlkahn.github.io/posts/gkr/</link>
+      <pubDate>Fri, 01 Nov 2024 15:40:59 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/gkr/</guid>
+      <description> Prev Next Page: / Download PDF </description>
+    </item>
+    <item>
+      <title>Notes on Sum-Check Protocol</title>
+      <link>https://tlkahn.github.io/posts/sum-check/</link>
+      <pubDate>Mon, 28 Oct 2024 15:40:59 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/sum-check/</guid>
+      <description> Prev Next Page: / Download PDF </description>
+    </item>
+    <item>
+      <title>My English translation of an ancient sanskrit Meditation book</title>
+      <link>https://tlkahn.github.io/posts/vbt/</link>
+      <pubDate>Thu, 17 Oct 2024 15:40:59 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/vbt/</guid>
+      <description>This is the English translation after I finished my study in varanasi by end of &amp;lsquo;19 (right before the pandemic). I think it is time to make this public. If you are interested to know more, there is a full annotation on Amazon.&#xA;Without further ado, here is the full text:&#xA;1&#xA;Sri Devi asked:&#xA;I heard that everything is illusion.&#xA;We should follow the instruction of Rudrayāmala to enter union.</description>
+    </item>
+    <item>
+      <title>Updates in my old zkSNARK Research: IVC, Folding etc</title>
+      <link>https://tlkahn.github.io/posts/zk-survey/</link>
+      <pubDate>Thu, 17 Oct 2024 15:40:59 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/zk-survey/</guid>
+      <description>Since 2022, we have seen significant progress in zkSNARK research, particularly in areas like Incremental Verifiable Computation (IVC) and folding schemes. I have refurbished my 2022 survey article and make it publicly available.&#xA;Prev Next Page: / Download PDF </description>
+    </item>
+    <item>
+      <title>About Peter Higgs</title>
+      <link>https://tlkahn.github.io/posts/higgs/</link>
+      <pubDate>Wed, 10 Apr 2024 09:44:21 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/higgs/</guid>
+      <description>Peter Higgs, one of the greatest theorectical physists who passed away earlier this week in Edinburgh.&#xA;There is a Native American proverb which goes: Tell me a fact, and I&amp;rsquo;ll learn. Tell me a truth, and I&amp;rsquo;ll believe. But tell me a story, and it will live in my heart forever. I guess the best way to memorize someone is to share good stories:&#xA;When questioned about his plans if the LHC data confirms the Higgs boson&amp;rsquo;s existence, as anticipated by most physicists, he responded:</description>
+    </item>
+    <item>
+      <title>Source of Midjourney</title>
+      <link>https://tlkahn.github.io/posts/source-of-midjourney/</link>
+      <pubDate>Thu, 04 Jan 2024 12:23:11 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/source-of-midjourney/</guid>
+      <description>In an interview, David Holz, the founder/CEO of Midjourney revealed that the term &amp;ldquo;Midjourney&amp;rdquo; was inspired by Zhuangzi&amp;rsquo;s philosophy, which he studies and mused a lot.&#xA;Many wander from which part of the book the term &amp;ldquo;midjourney&amp;rdquo; was taken from.&#xA;It is from Qi-Wu, the second piece of inner chapters. In my translation of the book, I use the term &amp;ldquo;non-duality&amp;rdquo; to reflect the underlying meaning of the title.&#xA;The piece of text is actually talking about self-preservation (not only for life but everything one values and pursues):</description>
+    </item>
+    <item>
+      <title>An iterative exploration on EM algorithm</title>
+      <link>https://tlkahn.github.io/posts/em-algorithm-journey/</link>
+      <pubDate>Tue, 02 Jan 2024 23:00:05 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/em-algorithm-journey/</guid>
+      <description>An iterative exploration on EM algorithm # As a continuation of my notes on classicial machine learning, this is an exclusive study on EM agorithm to deepen my understanding from a wider variety of perspectives.&#xA;EM as Expection + Maximization # The understanding of latent variable is the first `get` in EM algorithms.&#xA;Through latent variable, we have witnessed the greatness of EM algorithm which breaks through the limit of MLE.</description>
+    </item>
+    <item>
+      <title>How I build a meditation app in a week</title>
+      <link>https://tlkahn.github.io/posts/how-i-build-a-meditation-app-in-a-week/</link>
+      <pubDate>Mon, 25 Dec 2023 21:15:12 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/how-i-build-a-meditation-app-in-a-week/</guid>
+      <description>Prelude # The story was I built an iOS app for group meditation. It works like Clubhouse but for regular meditators instead. The instructor can remotely sit with students, who can reserve class and book 1:1 sessions. Teachers can record sessions and offer the replay option for students. During meditation, they can play ambient music along with guidance.&#xA;I built the app in a week. I have to say that Swift is a much more enjoyable language than Objective-C which I developed apps on years ago.</description>
+    </item>
+    <item>
+      <title>Notes on classical ML math</title>
+      <link>https://tlkahn.github.io/posts/classical-ml-math-notes/</link>
+      <pubDate>Sun, 02 Apr 2023 22:00:05 +0800</pubDate>
+      <guid>https://tlkahn.github.io/posts/classical-ml-math-notes/</guid>
+      <description>Introduction # There are two major schools of thought on the interpretation of probability: one is the frequentist school and the other is the Bayesian school.&#xA;Later, we will use the following notation for the observed set: \(X_{N\times p}=(x_{1},x_{2},\cdots,x_{N})^{T},x_{i}=(x_{i1},x_{i2},\cdots,x_{ip})^{T}\) This notation indicates there are \(N\) samples, and each sample is a \(p\) -dimensional vector. Each observation is generated by \(p(x|\theta)\) .&#xA;Frequentist # Frequentists hold that in \(p(x|\theta)\) , \(\theta\) as a parameter is a constant.</description>
+    </item>
+  </channel>
+</rss>
